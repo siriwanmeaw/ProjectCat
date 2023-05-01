@@ -58,11 +58,74 @@ def imageInput(device, src):
             with col2:
                 st.image(img_, caption='Model Prediction(s) : {}'.format(label), use_column_width='always')
                 st.success("Predict : "+label)
-                st.warning("โรคไหัวใจ")
+                #st.warning(label[:-5].strip() == "Amecican_Shorthair")
+                #st.warning(label[:-5].strip())
+                if label[:-5].strip() == "Amecican_Shorthair" :
+                    desc = """
+                    นิสัย 
+-ขี้เล่น 
+-ร่าเริง
+-เป็นมิตร
+โรคควรระวัง
+-โรคหัวใจ
+-โรคทางเดินปัสสาวะและไต
+-โรคระบบต่อมไร้ท่อ
+                    """
+                    st.warning(desc)
+                elif label[:-5].strip() == "Khao_manee" :
+                    desc = """
+นิสัย
+-ขี้เล่นขี้สงสัย
+-ชอบสำรวจ
+-ขี้อ้อนต้องการความรัก
+โรคควรระวัง
+-โรคผิวหนัง
+โรคทางเดินอาหาร
+                    """
+                    st.warning(desc)
+                
+                elif label[:-5].strip() == "Korat_cat" :
+                    desc = """
+                    นิสัย
+-ขี้อ้อน
+-ชอบเล่นกับคน
+-ชี้อิจฉา
+โรคควรระวัง
+-โรคผิวหนัง
+-โรคระบบไหลเวียนโลหิต
+-โรคประสาท
+                    
+                    """
+                    st.warning(desc)
+                
+                elif label[:-5].strip() == "Siamese_cat" :
+                    desc = """
+                    นิสัย
+-ฉลาด
+-ขี้อ้อน
+-เข้ากับคนง่าย 
+โรคควรระวัง
+-โรคระบบโครงกระดูก ข้อต่อ
+-โรคมะเร็ง
+                    """
+                    st.warning(desc)
+                
+                elif label[:-5].strip() == "sphyx":
 
+                    desc = """
+                    นิสัย
+-คล่องตัวแข็งแรง
+-ชอบนอนพักผ่อน
+-ขี้เล่น
+โรคควรระวัง
+-โรคระบบเลือดและภูมิคุ้มกัน\n
+-โรคข้ออักเสบ
+-โรคระบบผิวหนัง
+                    """
+                    st.warning(desc)
 
-
-
+                st.markdown(f"<script>alert({desc})</script>",unsafe_allow_html=True)
+                    
     elif src == 'From test set.': 
         # Image selector slider
         imgpath = glob.glob('data/images/*')
@@ -78,15 +141,79 @@ def imageInput(device, src):
                 #call Model prediction--
                 model = torch.hub.load('ultralytics/yolov5', 'custom', path=cfg_model_path, force_reload=True) 
                 pred = model(image_file)
-                pred.render()  # render bbox in image
+                im,label = pred.render()  # render bbox in image
                 for im in pred.ims:
                     im_base64 = Image.fromarray(im)
                     im_base64.save(os.path.join('data/outputs', os.path.basename(image_file)))
                 #--Display predicton
                     img_ = Image.open(os.path.join('data/outputs', os.path.basename(image_file)))
                     st.image(img_, caption='Model Prediction(s)')
+                    st.success("Predict : "+label)
+                if label[:-5].strip() == "Amecican_Shorthair" :
+                    desc = """
+                    นิสัย 
+-ขี้เล่น 
+-ร่าเริง
+-เป็นมิตร
+โรคควรระวัง
+-โรคหัวใจ
+-โรคทางเดินปัสสาวะและไต
+-โรคระบบต่อมไร้ท่อ
+                    """
+                    st.warning(desc)
+                elif label[:-5].strip() == "Khao_manee" :
+                    desc = """
+นิสัย
+-ขี้เล่นขี้สงสัย
+-ชอบสำรวจ
+-ขี้อ้อนต้องการความรัก
+โรคควรระวัง
+-โรคผิวหนัง
+โรคทางเดินอาหาร
+                    """
+                    st.warning(desc)
+                
+                elif label[:-5].strip() == "Korat_cat" :
+                    desc = """
+                    นิสัย
+-ขี้อ้อน
+-ชอบเล่นกับคน
+-ชี้อิจฉา
+โรคควรระวัง
+-โรคผิวหนัง
+-โรคระบบไหลเวียนโลหิต
+-โรคประสาท
+                    
+                    """
+                    st.warning(desc)
+                
+                elif label[:-5].strip() == "Siamese_cat" :
+                    desc = """
+                    นิสัย
+-ฉลาด
+-ขี้อ้อน
+-เข้ากับคนง่าย 
+โรคควรระวัง
+-โรคระบบโครงกระดูก ข้อต่อ
+-โรคมะเร็ง
+                    """
+                    st.warning(desc)
+                
+                elif label[:-5].strip() == "sphyx":
 
+                    desc = """
+                    นิสัย
+-คล่องตัวแข็งแรง
+-ชอบนอนพักผ่อน
+-ขี้เล่น
+โรคควรระวัง
+-โรคระบบเลือดและภูมิคุ้มกัน\n
+-โรคข้ออักเสบ
+-โรคระบบผิวหนัง
+                    """
+                    st.warning(desc)
 
+                st.markdown(f"<script>alert({desc})</script>",unsafe_allow_html=True)
 
 
 def videoInput(device, src):
